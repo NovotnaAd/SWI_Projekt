@@ -40,6 +40,10 @@
     color: #111;
     font-weight: 600;
 }
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
 
 .icon {
     font-size: 18px;
@@ -51,6 +55,105 @@
 .icon:hover {
     color: #b48a7c;
     transform: translateY(-2px) scale(1.05);
+}
+
+
+/* ===== DROPDOWN MENU ===== */
+
+.dropdown-menu {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px);
+
+    background: #ffffff;
+
+    display: none;
+    justify-content: center;
+
+    padding-top: 60px;
+
+    z-index: 950;
+
+    overflow-y: auto;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+
+    animation: fadeDown 0.35s ease;
+}
+
+.dropdown-menu.open {
+    display: flex;
+}
+
+/* animace */
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* layout */
+.dropdown-inner {
+    display: flex;
+    gap: 120px;
+    max-width: 1000px;
+}
+
+/* sloupce */
+.menu-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+}
+
+/* NADPIS (WOMEN / MEN) */
+.menu-column h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    color: #999;
+    font-weight: 500;
+}
+
+/* ===== LINKY (HLAVNÍ ZMĚNA) ===== */
+
+.menu-link {
+    display: block;
+    text-decoration: none;   /* ❗ odstraní modré podtržení */
+    color: #222;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+
+    margin-bottom: 16px;
+
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+/* hover efekt */
+.menu-link:hover {
+    color: #000;
+    letter-spacing: 1px;
+}
+.overlay {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: rgba(0,0,0,0.2);
+    z-index: 940;
 }
 
 
@@ -121,84 +224,20 @@
     border-color: #b48a7c;
     transform: translateY(-3px);
 }
-
-
-/* ===== DROPDOWN MENU (FULLSCREEN) ===== */
-
-.dropdown-menu {
-    position: fixed;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 80px);
-
-    background: #ffffff;
-
-    display: none;
-    justify-content: center;
-
-    padding-top: 40px;
-
-    z-index: 950;
-
-    overflow-y: auto;
-
-    /* ✨ jemný shadow */
-    box-shadow: 0 20px 50px rgba(0,0,0,0.06);
-
-    /* ✨ smooth fade */
-    animation: fadeDown 0.35s ease;
-}
-
-.dropdown-menu.open {
-    display: flex;
-}
-
-/* animace */
-@keyframes fadeDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* layout */
-.dropdown-inner {
-    display: flex;
-    gap: 100px;
-    max-width: 900px;
-}
-
-/* sloupce */
-.menu-column {
-    display: flex;
-    flex-direction: column;
-    min-width: 160px;
-}
-
-/* nadpis */
-.menu-column h4 {
-    font-size: 18px;
-    letter-spacing: 3px;
-    margin-bottom: 30px;
-    color: #aaa;
-    font-weight: 500;
-}
-
-/* položky */
-.menu-column p {
-    margin-bottom: 16px;
+.cart-icon {
+    position: relative;
     cursor: pointer;
-    font-size: 24px;
-    color: #111;
-    transition: 0.25s ease;
 }
 
-.menu-column p:hover {
-    color: #b48a7c;
-    transform: translateX(6px);
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+
+    background: black;
+    color: white;
+
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 50%;
 }

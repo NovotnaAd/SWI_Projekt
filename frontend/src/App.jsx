@@ -3,20 +3,28 @@ import Navbar from "./components/Navbar";
 import Products from "./pages/Products";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
+import CategoryPage from "./pages/CategoryPage";
+import ProductDetail from "./pages/ProductDetail";
+import CartProvider from "./context/CartContext";
+import Cart from "./pages/Cart";
 
 function App() {
     return (
-        <BrowserRouter>
-            <Navbar />
+        <CartProvider>
+            <BrowserRouter>
+                <Navbar />
 
-            <Routes>
-                <Route path="/" element={<Home />} />   {/* 🔥 FIX */}
-                <Route path="/products" element={<Products />} />
-                <Route path="/cart" element={<h1>Košík</h1>} />
-            </Routes>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/category/:slug" element={<CategoryPage />} />
+                    <Route path="/product/:slug" element={<ProductDetail />} />
+                    <Route path="/cart" element={<Cart />} />
+                </Routes>
 
-            <Footer />
-        </BrowserRouter>
+                <Footer />
+            </BrowserRouter>
+        </CartProvider>
     );
 }
 
