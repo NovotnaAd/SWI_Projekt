@@ -13,11 +13,12 @@ import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
 import "./Navbar.css";
+import {AuthContext} from "../context/AuthContext.jsx";
 
 function Navbar() {
     const [showSearch, setShowSearch] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const { user, logout } = useContext(AuthContext);
     const handleMenu = () => {
         setMenuOpen((prev) => !prev);
         setShowSearch(false);
@@ -51,8 +52,26 @@ function Navbar() {
 
                     <div className="nav-right">
                         <FaPhone className="icon" />
-                        <FaHeart className="icon" />
-                        <FaUser className="icon" />
+                        <Link to="/wishlist">
+                            <FaHeart className="icon" />
+                        </Link>
+                        {user ? (
+                            <div className="nav-user">
+
+                                <Link to="/profile" className="user-name">
+                                    {user.firstName}
+                                </Link>
+
+                                <span onClick={logout} className="logout-text">
+                                    Odhlásit
+                                </span>
+
+                            </div>
+                        ) : (
+                            <Link to="/login">
+                                <FaUser className="icon" />
+                            </Link>
+                        )}
 
                         <Link to="/cart" style={{ textDecoration: "none", color: "inherit" }}>
                             <div className="cart-icon">

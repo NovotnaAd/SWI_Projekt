@@ -1,11 +1,11 @@
 /* ===== FOOTER ===== */
 
 .footer {
-    background: #fff;          /* 🔥 bílé pozadí */
-    color: #111;               /* 🔥 černý text */
+    background: #fff;
+    color: #111;
     margin-top: 80px;
     padding-top: 50px;
-    border-top: 1px solid #eee; /* jemná čára */
+    border-top: 1px solid #eee;
 }
 
 .footer-container {
@@ -14,7 +14,7 @@
     flex-wrap: wrap;
     gap: 40px;
 
-    max-width: 900px;   /* 🔥 zmenšeno */
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 40px;
 }
@@ -43,7 +43,7 @@
 }
 
 .footer-section li:hover {
-    color: #666;  /* jemný hover */
+    color: #666;
 }
 
 /* social */

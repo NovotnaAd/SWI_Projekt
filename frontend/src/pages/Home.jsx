@@ -6,11 +6,17 @@ import { categories } from "../data/categories";
 import { products } from "../data/products";
 
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { WishlistContext } from "../context/WishlistContext";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+
 
 function Home() {
 
     const presale = products.filter(p => p.tag === "presale");
     const bestsellers = products.filter(p => p.tag === "bestseller");
+
+    const { wishlist, toggleWishlist } = useContext(WishlistContext);
 
     return (
         <div className="home">
@@ -68,22 +74,40 @@ function Home() {
                 <h2 className="mb-4 text-center">Pre-sale produkty</h2>
 
                 <div className="row row-cols-1 row-cols-md-3 g-5">
-                    {presale.map((product) => (
-                        <div className="col" key={product.id}>
-                            <Link
-                                to={`/product/${product.slug}`}
-                                style={{ textDecoration: "none", color: "inherit" }}
-                            >
-                                <div className="card product-card">
-                                    <img src={product.image} alt={product.name} />
-                                    <div className="card-body text-center">
-                                        <h5 className="card-title">{product.name}</h5>
-                                        <p className="price">{product.price} Kč</p>
+                    {presale.map((product) => {
+                        const isInWishlist = wishlist.some((p) => p.id === product.id);
+
+                        return (
+                            <div className="col" key={product.id}>
+                                <Link
+                                    to={`/product/${product.slug}`}
+                                    style={{ textDecoration: "none", color: "inherit" }}
+                                >
+                                    <div className="card product-card">
+
+                                        {/* WISHLIST */}
+                                        <div
+                                            className="wishlist-icon"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                toggleWishlist(product);
+                                            }}
+                                        >
+                                            {isInWishlist ? <FaHeart /> : <FaRegHeart />}
+                                        </div>
+
+                                        <img src={product.image} alt={product.name} />
+
+                                        <div className="card-body text-center">
+                                            <h5 className="card-title">{product.name}</h5>
+                                            <p className="price">{product.price} Kč</p>
+                                        </div>
+
                                     </div>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
+                                </Link>
+                            </div>
+                        );
+                    })}
                 </div>
             </section>
 

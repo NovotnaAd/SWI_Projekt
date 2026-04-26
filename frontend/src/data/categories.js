@@ -8,7 +8,7 @@ import clothes from "../assets/images/clothes.jpg";
 import wallet from "../assets/images/wallet.jpg";
 
 export const categories = [
-    // 👩 HER
+    // HER
     { id: 1, name: "Kabelky", image: bag, slug: "bags", gender: "women" },
     { id: 2, name: "Boty", image: shoes, slug: "shoes", gender: "women" },
     { id: 3, name: "Šperky", image: jewelry, slug: "jewelry", gender: "women" },
@@ -18,7 +18,7 @@ export const categories = [
     { id: 7, name: "Peněženky", image: wallet, slug: "wallets", gender: "women" },
     { id: 8, name: "Hodinky", image: watches, slug: "watches", gender: "women" },
 
-    // 👨 HIM
+    // HIM
     { id: 9, name: "Hodinky", image: watches, slug: "watches", gender: "men" },
     { id: 10, name: "Oblečení", image: clothes, slug: "clothes", gender: "men" },
     { id: 11, name: "Boty", image: shoes, slug: "shoes", gender: "men" },

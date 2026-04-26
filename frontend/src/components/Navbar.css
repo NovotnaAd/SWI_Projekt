@@ -123,11 +123,11 @@
     font-weight: 500;
 }
 
-/* ===== LINKY (HLAVNÍ ZMĚNA) ===== */
+/* ===== LINKY ===== */
 
 .menu-link {
     display: block;
-    text-decoration: none;   /* ❗ odstraní modré podtržení */
+    text-decoration: none;   /*odstraní modré podtržení */
     color: #222;
 
     font-family: 'Inter', sans-serif;
@@ -240,4 +240,31 @@
     font-size: 11px;
     padding: 3px 7px;
     border-radius: 50%;
+}
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.user-name:hover {
+    color: #b48a7c;
+}
+
+.logout-text {
+    cursor: pointer;
+    color: #b48a7c;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.logout-text:hover {
+    text-decoration: underline;
+    color: black;
 }
