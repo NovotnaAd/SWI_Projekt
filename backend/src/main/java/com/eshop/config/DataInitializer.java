@@ -29,7 +29,7 @@ public class DataInitializer implements CommandLineRunner {
             Product bag = new Product();
             bag.setNazev("Versace Leather Bag");
             bag.setSlug("versace-leather-bag");
-            bag.setCena(BigDecimal.valueOf(45000));
+            bag.setCena(45000.0);
             bag.setPopis("Limitovaná edice kožené kabelky z italské dílny.");
             bag.setCategory(bags);
             productRepository.save(bag);
