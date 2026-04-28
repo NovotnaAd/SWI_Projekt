@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -55,10 +56,10 @@ public class Product {
         joinColumns = @JoinColumn(name = "product_id"),
         inverseJoinColumns = @JoinColumn(name = "attribute_id")
     )
-    private Set<ProductAttribute> attributes;
+    private Set<ProductAttribute> attributes = new HashSet<>();
 
     // One-to-Many relationship with OrderItem
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = false)
-    private Set<OrderItem> orderItems;
+    private Set<OrderItem> orderItems = new HashSet<>();
 
 }

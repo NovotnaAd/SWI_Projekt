@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,6 @@ public class ProductAttribute {
     private String value; // e.g., "42", "100ml"
 
     @ManyToMany(mappedBy = "attributes")
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 
 }

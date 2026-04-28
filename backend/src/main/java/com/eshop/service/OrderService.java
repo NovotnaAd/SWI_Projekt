@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -80,7 +81,7 @@ public class OrderService {
 
     /**
      * Create a new order with items
-     * CRITICAL: Calculates total price from OrderItems
+     * CRITICAL: Calculates total price from OrderItems and persists items
      */
     public Optional<OrderDTO> create(OrderDTO orderDTO) {
         Optional<User> user = userRepository.findById(orderDTO.getUserId());
@@ -98,11 +99,31 @@ public class OrderService {
         order.setOrderState(Order.OrderState.NOVA);
         order.setPaymentState(Order.PaymentState.NEZAPLACENA);
 
-        // Calculate total price from items
+        // Initialize items set
+        order.setItems(new HashSet<>());
+
+        // Build OrderItem entities from DTOs and compute total
         Double totalPrice = 0.0;
         if (orderDTO.getItems() != null && !orderDTO.getItems().isEmpty()) {
             for (OrderItemDTO itemDTO : orderDTO.getItems()) {
-                totalPrice += itemDTO.getTotalPrice() != null ? itemDTO.getTotalPrice() : 0.0;
+                Optional<Product> productOpt = productRepository.findById(itemDTO.getProductId());
+                if (productOpt.isEmpty()) {
+                    // Skip invalid product entries
+                    continue;
+                }
+                Product product = productOpt.get();
+
+                OrderItem item = new OrderItem();
+                item.setProduct(product);
+                item.setQuantity(itemDTO.getQuantity());
+                item.setUnitPrice(itemDTO.getUnitPrice() != null ? itemDTO.getUnitPrice() : product.getCena());
+                Double computedTotal = itemDTO.getTotalPrice() != null ? itemDTO.getTotalPrice() : item.getQuantity() * item.getUnitPrice();
+                item.setTotalPrice(computedTotal);
+                item.setNotes(itemDTO.getNotes());
+                item.setOrder(order);
+
+                order.getItems().add(item);
+                totalPrice += computedTotal;
             }
         }
         order.setTotalPrice(totalPrice);
@@ -121,7 +142,7 @@ public class OrderService {
                     order.setNotes(orderDTO.getNotes());
                     order.setDueDate(orderDTO.getDueDate());
                     order.setDeliveryDate(orderDTO.getDeliveryDate());
-                    
+
                     if (orderDTO.getOrderState() != null) {
                         try {
                             order.setOrderState(Order.OrderState.valueOf(orderDTO.getOrderState()));
@@ -129,7 +150,7 @@ public class OrderService {
                             // Keep existing state if invalid
                         }
                     }
-                    
+
                     if (orderDTO.getPaymentState() != null) {
                         try {
                             order.setPaymentState(Order.PaymentState.valueOf(orderDTO.getPaymentState()));
@@ -160,6 +181,9 @@ public class OrderService {
     public Optional<OrderDTO> addOrderItem(Long orderId, OrderItemDTO itemDTO) {
         return orderRepository.findById(orderId)
                 .flatMap(order -> {
+                    if (order.getItems() == null) {
+                        order.setItems(new HashSet<>());
+                    }
                     Optional<Product> product = productRepository.findById(itemDTO.getProductId());
                     if (product.isEmpty()) {
                         return Optional.empty();
@@ -168,10 +192,10 @@ public class OrderService {
                     OrderItem item = new OrderItem();
                     item.setProduct(product.get());
                     item.setQuantity(itemDTO.getQuantity());
-                    item.setUnitPrice(itemDTO.getUnitPrice());
+                    item.setUnitPrice(itemDTO.getUnitPrice() != null ? itemDTO.getUnitPrice() : product.get().getCena());
                     item.setTotalPrice(itemDTO.getTotalPrice() != null 
                             ? itemDTO.getTotalPrice() 
-                            : itemDTO.getQuantity() * itemDTO.getUnitPrice());
+                            : item.getQuantity() * item.getUnitPrice());
                     item.setNotes(itemDTO.getNotes());
                     item.setOrder(order);
 
@@ -194,6 +218,10 @@ public class OrderService {
     public Optional<OrderDTO> removeOrderItem(Long orderId, Long orderItemId) {
         return orderRepository.findById(orderId)
                 .map(order -> {
+                    if (order.getItems() == null) {
+                        return entityToDTO(order);
+                    }
+
                     order.getItems().removeIf(item -> item.getId().equals(orderItemId));
 
                     // Recalculate total price
