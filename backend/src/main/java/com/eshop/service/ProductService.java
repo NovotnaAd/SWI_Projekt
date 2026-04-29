@@ -44,11 +44,12 @@ public class ProductService {
 
     /**
      * Get product by slug
-     */
-    public Optional<ProductDTO> getBySlug(String slug) {
-        return productRepository.findBySlug(slug)
-                .map(this::entityToDTO);
-    }
+     */// SPRÁVNĚ: Voláme .map() na Optionalu, který vrací repozitář
+public Optional<ProductDTO> getBySlug(String slug) {
+    return productRepository.findBySlug(slug)
+            .map(this::entityToDTO);
+}
+    
 
     /**
      * Get all products by category slug
