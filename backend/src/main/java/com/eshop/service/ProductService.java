@@ -24,9 +24,6 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final SupplierRepository supplierRepository;
 
-    /**
-     * Získání všech produktů
-     */
     public List<ProductDTO> getAll() {
         return productRepository.findAll()
                 .stream()
@@ -34,25 +31,16 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Získání produktu podle ID
-     */
     public Optional<ProductDTO> getById(Long id) {
         return productRepository.findById(id)
                 .map(this::entityToDTO);
     }
 
-    /**
-     * Získání produktu podle slugu (tady byla ta chyba)
-     */
     public Optional<ProductDTO> getBySlug(String slug) {
         return productRepository.findBySlug(slug)
                 .map(this::entityToDTO);
     }
 
-    /**
-     * Produkty podle slugu kategorie
-     */
     public List<ProductDTO> getProductsByCategorySlug(String slug) {
         return categoryRepository.findBySlug(slug)
                 .map(category -> productRepository.findByCategoryId(category.getId())
@@ -97,9 +85,6 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Stránkované vyhledávání a filtry
-     */
     public Page<ProductDTO> getByGenderPaginated(String gender, Pageable pageable) {
         return productRepository.findByGender(gender, pageable)
                 .map(this::entityToDTO);
@@ -115,11 +100,8 @@ public class ProductService {
                 .map(this::entityToDTO);
     }
 
-    /**
-     * Vytvoření a aktualizace
-     */
     public Optional<ProductDTO> create(ProductDTO productDTO) {
-        Category category = categoryRepository.findById(productDTO.getKategorieId()).orElse(null);
+        Category category = categoryRepository.findById(productDTO.getCategoryId()).orElse(null);
         Supplier supplier = null;
         if (productDTO.getSupplierId() != null) {
             supplier = supplierRepository.findById(productDTO.getSupplierId()).orElse(null);
@@ -134,7 +116,7 @@ public class ProductService {
     public Optional<ProductDTO> update(Long id, ProductDTO productDTO) {
         return productRepository.findById(id)
                 .map(product -> {
-                    Category category = categoryRepository.findById(productDTO.getKategorieId()).orElse(null);
+                    Category category = categoryRepository.findById(productDTO.getCategoryId()).orElse(null);
                     Supplier supplier = null;
                     if (productDTO.getSupplierId() != null) {
                         supplier = supplierRepository.findById(productDTO.getSupplierId()).orElse(null);
@@ -152,9 +134,6 @@ public class ProductService {
         return false;
     }
 
-    /**
-     * Pomocné metody pro převod (Místo konstrukčního pekla)
-     */
     private ProductDTO entityToDTO(Product product) {
         ProductDTO dto = new ProductDTO();
         dto.setId(product.getId());
@@ -167,8 +146,8 @@ public class ProductService {
         dto.setImageUrl(product.getImageUrl());
         
         if (product.getCategory() != null) {
-            dto.setKategorieId(product.getCategory().getId());
-            dto.setKategorieNazev(product.getCategory().getNazev());
+            dto.setCategoryId(product.getCategory().getId());
+            dto.setCategoryNazev(product.getCategory().getNazev());
         }
         if (product.getSupplier() != null) {
             dto.setSupplierId(product.getSupplier().getId());
@@ -177,4 +156,15 @@ public class ProductService {
         return dto;
     }
 
-    private void updateProductFields(Product
+    private void updateProductFields(Product product, ProductDTO dto, Category category, Supplier supplier) {
+        product.setNazev(dto.getNazev());
+        product.setSlug(dto.getSlug());
+        product.setCena(dto.getCena());
+        product.setPopis(dto.getPopis());
+        product.setTag(dto.getTag());
+        product.setGender(dto.getGender());
+        product.setImageUrl(dto.getImageUrl());
+        product.setCategory(category);
+        product.setSupplier(supplier);
+    }
+}
