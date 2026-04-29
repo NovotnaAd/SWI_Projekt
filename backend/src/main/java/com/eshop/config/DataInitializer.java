@@ -20,9 +20,10 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (categoryRepository.count() == 0) {
+        // Kontrola, jestli už data v DB náhodou nejsou
+        if (categoryRepository.count() == 0 && productRepository.count() == 0) {
             
-            // 1. Vytvoření kategorie
+            // 1. VYTVOŘENÍ KATEGORIE (všechna pole nullable = false)
             Category bags = new Category();
             bags.setNazev("Luxusní kabelky");
             bags.setSlug("luxusni-kabelky");
@@ -30,30 +31,33 @@ public class DataInitializer implements CommandLineRunner {
             bags.setImageUrl("https://placehold.co/600x400?text=Kabelky"); 
             categoryRepository.save(bags);
 
-            // 2. Vytvoření dodavatele (jen se jménem, to tam 100% máš)
+            // 2. VYTVOŘENÍ DODAVATELE (všechna pole nullable = false)
             Supplier supplier = new Supplier();
             supplier.setName("Versace Official");
-            // Řádek s e-mailem jsem smazal, aby to neházelo chybu
+            supplier.setAddress("Via Gesù 12, 20121 Milano, Italy"); // povinné
+            supplier.setIco("IT0123456789"); // povinné a unikátní
+            supplier.setEmail("wholesale@versace.it"); // povinné a unikátní
             supplierRepository.save(supplier);
 
-            // 3. Vytvoření produktu
+            // 3. VYTVOŘENÍ PRODUKTU (všechna pole nullable = false)
             Product bag = new Product();
             bag.setNazev("Versace Leather Bag");
             bag.setSlug("versace-leather-bag");
             bag.setCena(45000.0);
-            bag.setPopis("Limitovaná edice kožené kabelky z italské dílny.");
+            bag.setPopis("Limitovaná edice kožené kabelky z italské dílny Versace.");
+            bag.setTag("Luxury");
+            bag.setGender("women");
+            bag.setImageUrl("https://placehold.co/600x400?text=Versace+Bag");
+            
+            // Propojení vazeb (Many-to-One)
             bag.setCategory(bags);
             bag.setSupplier(supplier);
-            bag.setImageUrl("https://placehold.co/600x400?text=Versace+Bag");
-            bag.setGender("women");
-            bag.setTag("Luxury");
             
             productRepository.save(bag);
             
             System.out.println("--------------------------------------------------");
-            System.out.println(">> ÚSPĚCH: Testovací data nahrána!");
+            System.out.println(">> ÚSPĚCH: Databáze byla kompletně naplněna!");
             System.out.println("--------------------------------------------------");
         }
-    
     }
 }
