@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
@@ -19,7 +17,9 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        // Spustíme jen pokud je databáze prázdná
         if (categoryRepository.count() == 0) {
+            
             // 1. Vytvoření kategorie
             Category bags = new Category();
             bags.setNazev("Luxusní kabelky");
@@ -36,6 +36,11 @@ public class DataInitializer implements CommandLineRunner {
             bag.setPopis("Limitovaná edice kožené kabelky z italské dílny.");
             bag.setCategory(bags);
             bag.setImageUrl("https://placehold.co/600x400?text=Versace+Bag");
+            
+            // TYTO DVA ŘÁDKY JSOU KLÍČOVÉ (aby DB nenadávala na NULL):
+            bag.setGender("women");
+            bag.setTag("Luxury");
+            
             productRepository.save(bag);
             
             System.out.println("--------------------------------------------------");
