@@ -24,6 +24,8 @@ public class DataInitializer implements CommandLineRunner {
             bags.setNazev("Luxusní kabelky");
             bags.setSlug("luxusni-kabelky");
             bags.setGender("women");
+            // TENTO ŘÁDEK CHYBĚL:
+            bags.setImageUrl("https://placehold.co/600x400?text=Kabelky"); 
             categoryRepository.save(bags);
 
             Product bag = new Product();
@@ -32,9 +34,14 @@ public class DataInitializer implements CommandLineRunner {
             bag.setCena(45000.0);
             bag.setPopis("Limitovaná edice kožené kabelky z italské dílny.");
             bag.setCategory(bags);
+            // PRO JISTOTU NASTAVÍME OBRÁZEK I U PRODUKTU:
+            bag.setImageUrl("https://placehold.co/600x400?text=Versace+Bag");
             productRepository.save(bag);
             
-            System.out.println(">> Testovací data nahrána!");
+            System.out.println("--------------------------------------------------");
+            System.out.println(">> ÚSPĚCH: Testovací data byla nahrána do DB.");
+            System.out.println("--------------------------------------------------");
         }
+    }
     }
 }
