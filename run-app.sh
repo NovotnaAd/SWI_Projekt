@@ -25,7 +25,9 @@ echo "Checking database..."
 sudo service mariadb start || sudo service mysql start
 
 # 5. Vytvoření DB pokud neexistuje
+# Vytvoří databázi a rovnou do ní nalije tabulky ze souboru
 mysql -e "CREATE DATABASE IF NOT EXISTS fashion_eshop;"
+mysql fashion_eshop < sql/schema.sql
 
 # 6. Instalace frontend závislostí, pokud chybí
 if [ ! -d "frontend/node_modules" ]; then
