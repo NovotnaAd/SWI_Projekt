@@ -18,16 +18,33 @@ if not exist "frontend\node_modules\" (
     cd frontend && call npm install && cd ..
 )
 
-REM 4. Kontrola portu 3306
+REM 4. Kontrola a inicializace databáze
 netstat -an | findstr :3306 >nul
 if %ERRORLEVEL% NEQ 0 (
     echo [VAROVANI] Na portu 3306 nic nebezi. Zapni MySQL!
     pause
+) else (
+    echo [INFO] Nahravam strukturu databaze ze slozky sql...
+    echo (Zadej sve heslo k MySQL, pokud budes vyzvana)
+    
+    :: Vytvori databazi a hned do ni nalije tabulky
+    mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS fashion_eshop;"
+    mysql -u root -p fashion_eshop < sql\schema.sql
+    
+    echo [OK] Databaze je pripravena.
 )
 
 REM 5. SPUSTENI
 echo [INFO] Startuji Backend a Frontend...
-start "Boujee BACKEND" cmd /c "cd backend && mvn spring-boot:run"
+
+:: Zkusime mvn, pokud nefunguje, pouzijeme mvnw (wrapper)
+where mvn >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    start "Boujee BACKEND" cmd /c "cd backend && mvn spring-boot:run"
+) else (
+    start "Boujee BACKEND" cmd /c "cd backend && mvnw.cmd spring-boot:run"
+)
+
 start "Boujee FRONTEND" cmd /c "cd frontend && npm run dev"
 
 echo ==================================================
