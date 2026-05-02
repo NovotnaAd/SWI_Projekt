@@ -14,6 +14,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Contact from "./pages/Contact";
 import SupplierPage from "./pages/SupplierPage";
+import Products from "./pages/Products";
 
 function App() {
     return (
@@ -27,6 +28,8 @@ function App() {
                 <Route path="/category/:slug" element={<CategoryPage />} />
 
                 <Route path="/product/:slug" element={<ProductDetail />} />
+
+                <Route path="/products" element={<Products />} />
 
                 <Route path="/cart" element={<Cart />} />
 

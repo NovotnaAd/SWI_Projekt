@@ -56,7 +56,7 @@ function Checkout() {
         const order = {
             userId: user.id,
             deliveryAddress: `${form.address}, ${form.city}, ${form.zip}, ${form.country}`,
-            notes: "",
+            notes: `Doprava: ${form.delivery}, Platba: ${form.payment}`,
             items: cart.map(item => ({
                 productId: item.id,
                 quantity: item.quantity,
@@ -84,7 +84,7 @@ function Checkout() {
                 return;
             }
 
-            setOrderData({ items: cart, total: totalPrice });
+            setOrderData({ items: cart, total: totalPrice, delivery: form.delivery, payment: form.payment });
             setOrderDone(true);
             setCart([]);
         } catch (err) {
@@ -114,6 +114,24 @@ function Checkout() {
                         ))}
                     </div>
 
+                    <div className="order-divider" />
+
+                    <div className="order-item">
+                        <span>Doprava</span>
+                        <span>{orderData.delivery === "kuryr" ? "Kurýr" : "Zásilkovna"}</span>
+                    </div>
+
+                    <div className="order-item">
+                        <span>Platba</span>
+                        <span>
+                            {orderData.payment === "card" && "Platební karta"}
+                            {orderData.payment === "dobírka" && "Dobírka"}
+                            {orderData.payment === "prevod" && "Bankovní převod"}
+                        </span>
+                    </div>
+
+                    <div className="order-divider" />
+
                     <div className="order-total-row">
                         <span>Celkem</span>
                         <span>{orderData.total} Kč</span>
@@ -142,6 +160,67 @@ function Checkout() {
                     <input name="zip" placeholder="PSČ" onChange={handleChange} />
                     <input name="country" placeholder="Stát" onChange={handleChange} />
 
+                    <h2>Doprava</h2>
+                    <div className="option-list">
+                        <div
+                            className={`option-row ${form.delivery === "zasilkovna" ? "active" : ""}`}
+                            onClick={() => setForm({ ...form, delivery: "zasilkovna" })}
+                        >
+                            <div>
+                                <h3>Zásilkovna</h3>
+                                <p>Vyzvednutí na pobočce</p>
+                            </div>
+                            <span>70 Kč</span>
+                        </div>
+
+                        <div
+                            className={`option-row ${form.delivery === "kuryr" ? "active" : ""}`}
+                            onClick={() => setForm({ ...form, delivery: "kuryr" })}
+                        >
+                            <div>
+                                <h3>Kurýr</h3>
+                                <p>Doručení na adresu</p>
+                            </div>
+                            <span>120 Kč</span>
+                        </div>
+                    </div>
+
+                    <h2>Platba</h2>
+                    <div className="option-list">
+                        <div
+                            className={`option-row ${form.payment === "card" ? "active" : ""}`}
+                            onClick={() => setForm({ ...form, payment: "card" })}
+                        >
+                            <div>
+                                <h3>Platební karta</h3>
+                                <p>Visa, Mastercard, Amex</p>
+                            </div>
+                            <span>Zdarma</span>
+                        </div>
+
+                        <div
+                            className={`option-row ${form.payment === "dobírka" ? "active" : ""}`}
+                            onClick={() => setForm({ ...form, payment: "dobírka" })}
+                        >
+                            <div>
+                                <h3>Dobírka</h3>
+                                <p>Platba při převzetí</p>
+                            </div>
+                            <span>Zdarma</span>
+                        </div>
+
+                        <div
+                            className={`option-row ${form.payment === "prevod" ? "active" : ""}`}
+                            onClick={() => setForm({ ...form, payment: "prevod" })}
+                        >
+                            <div>
+                                <h3>Bankovní převod</h3>
+                                <p>Platba předem na účet</p>
+                            </div>
+                            <span>Zdarma</span>
+                        </div>
+                    </div>
+
                     <button type="submit" className="checkout-submit">
                         Dokončit objednávku
                     </button>
@@ -150,12 +229,19 @@ function Checkout() {
                 <div className="checkout-summary">
                     <h2>Souhrn</h2>
                     {cart.map((item, i) => (
-                        <div key={i}>
-                            {item.nazev} ({item.quantity}×)
+                        <div key={i} className="summary-item">
+                            <span>{item.nazev} ({item.quantity}×)</span>
+                            <span>{item.cena * item.quantity} Kč</span>
                         </div>
                     ))}
-                    <div>Doprava: {deliveryPrice} Kč</div>
-                    <div className="total">Celkem: {totalPrice} Kč</div>
+                    <div className="summary-row">
+                        <span>Doprava</span>
+                        <span>{deliveryPrice} Kč</span>
+                    </div>
+                    <div className="summary-row total">
+                        <span>Celkem</span>
+                        <span>{totalPrice} Kč</span>
+                    </div>
                 </div>
 
             </div>

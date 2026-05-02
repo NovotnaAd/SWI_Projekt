@@ -90,9 +90,9 @@ public class OrderService {
         }
 
         Order order = new Order();
-        order.setOrderNumber(orderDTO.getOrderNumber());
+        order.setOrderNumber("ORD-" + System.currentTimeMillis());
+        order.setDueDate(LocalDateTime.now().plusDays(7));
         order.setOrderDate(LocalDateTime.now());
-        order.setDueDate(orderDTO.getDueDate());
         order.setDeliveryAddress(orderDTO.getDeliveryAddress());
         order.setNotes(orderDTO.getNotes());
         order.setUser(user.get());

@@ -1,9 +1,8 @@
 package com.eshop.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,7 +42,8 @@ public class User {
     @Column(nullable = false)
     private UserRole role = UserRole.CUSTOMER;
 
-    // One-to-Many relationship with Order
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Order> orders = new HashSet<>();
 
@@ -52,5 +52,6 @@ public class User {
         ADMIN,
         STAFF
     }
+
 
 }

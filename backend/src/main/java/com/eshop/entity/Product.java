@@ -1,9 +1,8 @@
 package com.eshop.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,7 +57,8 @@ public class Product {
     )
     private Set<ProductAttribute> attributes = new HashSet<>();
 
-    // One-to-Many relationship with OrderItem
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = false)
     private Set<OrderItem> orderItems = new HashSet<>();
 

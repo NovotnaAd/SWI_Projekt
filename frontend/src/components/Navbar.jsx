@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from "react";
 import { FaBars, FaSearch, FaUser, FaShoppingBag, FaPhone, FaStore } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import "./Navbar.css";
 import { API_BASE_URL } from '../apiConfig';
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
     const [showSearch, setShowSearch] = useState(false);
@@ -27,7 +27,17 @@ function Navbar() {
         setShowSearch(false);
     };
 
-    const handleSearch = () => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        if (e.key === "Enter" && searchQuery.trim()) {
+            setShowSearch(false);
+            navigate(`/products?search=${searchQuery}`);
+            setSearchQuery("");
+        }
+    };
+    const handleSearchIcon = () => {
         setShowSearch(prev => !prev);
         setMenuOpen(false);
     };
@@ -39,7 +49,7 @@ function Navbar() {
 
                     <div className="nav-left">
                         <FaBars className="icon" onClick={handleMenu} />
-                        <FaSearch className="icon" onClick={handleSearch} />
+                        <FaSearch className="icon" onClick={handleSearchIcon} />
                     </div>
 
                     <div className="nav-center">
@@ -119,6 +129,9 @@ function Navbar() {
                     type="text"
                     placeholder="Hledat produkty..."
                     className="search-big"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleSearch}
                 />
             </div>
         </>

@@ -39,7 +39,6 @@ function Home() {
                 <div className="hero-overlay">
                     <h1>Den Matek</h1>
                     <p>Pro ženu, která si zaslouží to nejlepší</p>
-                    <button>Nakupujte nyní</button>
                 </div>
             </section>
 
@@ -75,7 +74,6 @@ function Home() {
                 <div className="video-overlay">
                     <h2>Styl, který mluví za vás</h2>
                     <p>Elegance v každém detailu</p>
-                    <button>Prohlédnout</button>
                 </div>
             </section>
 
@@ -141,7 +139,6 @@ function Home() {
                 <div className="summer-overlay">
                     <h2>Objevte naši letní kolekci</h2>
                     <p>Lehkost, barvy a letní elegance</p>
-                    <button>Prohlédnout kolekci</button>
                 </div>
             </section>
 
