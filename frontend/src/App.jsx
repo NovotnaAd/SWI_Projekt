@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Contact from "./pages/Contact";
+import SupplierPage from "./pages/SupplierPage";
 
 function App() {
     return (
@@ -28,6 +29,8 @@ function App() {
                 <Route path="/product/:slug" element={<ProductDetail />} />
 
                 <Route path="/cart" element={<Cart />} />
+
+                <Route path="/suppliers" element={<SupplierPage />} />
 
                 <Route path="/contact" element={<Contact />} />
 

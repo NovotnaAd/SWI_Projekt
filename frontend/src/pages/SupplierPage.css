@@ -1,0 +1,83 @@
+.supplier-page {
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.supplier-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    margin-bottom: 50px;
+    letter-spacing: 1px;
+}
+
+.supplier-search {
+    max-width: 400px;
+    margin: 0 auto 40px;
+}
+
+.supplier-search input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    outline: none;
+    transition: 0.2s;
+}
+
+.supplier-search input:focus {
+    border-color: black;
+    box-shadow: none;
+}
+
+.supplier-empty {
+    text-align: center;
+    color: #999;
+    margin-top: 40px;
+}
+
+.supplier-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.supplier-table thead tr {
+    border-bottom: 2px solid black;
+}
+
+.supplier-table thead th {
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+    color: #444;
+    transition: 0.2s;
+}
+
+.supplier-table thead th:hover {
+    color: black;
+}
+
+.supplier-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: 0.2s;
+}
+
+.supplier-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.supplier-table tbody td {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #444;
+}
+
+@media (max-width: 768px) {
+    .supplier-page {
+        padding: 80px 20px;
+    }
+}

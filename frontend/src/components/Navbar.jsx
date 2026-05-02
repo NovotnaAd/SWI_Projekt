@@ -1,11 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import {
-    FaBars,
-    FaSearch,
-    FaUser,
-    FaShoppingBag,
-    FaPhone,
-} from "react-icons/fa";
+import { FaBars, FaSearch, FaUser, FaShoppingBag, FaPhone, FaStore } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
@@ -54,10 +48,14 @@ function Navbar() {
                         </Link>
                     </div>
 
-                    <div className="nav-right">
-                        <Link to="/contact">
-                            <FaPhone className="icon" />
-                        </Link>
+                        <div className="nav-right">
+                            <Link to="/contact">
+                                <FaPhone className="icon" />
+                            </Link>
+
+                            <Link to="/suppliers">
+                                <FaStore className="icon" />
+                            </Link>
 
                         {user ? (
                             <div className="nav-user">
