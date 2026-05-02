@@ -13,9 +13,8 @@ function ProductDetail() {
 
     const { addToCart } = useContext(CartContext);
 
-    // FETCH JEDNOHO PRODUKTU
     useEffect(() => {
-        fetch("http://localhost:3000/products")
+        fetch("http://localhost:8080/products")
             .then(res => res.json())
             .then(data => {
                 const found = data.find(p => p.slug === slug);
@@ -49,7 +48,7 @@ function ProductDetail() {
 
                 {/* IMAGE */}
                 <div className="product-image">
-                    <img src={product.obrazek} alt={product.nazev} />
+                    <img src={product.imageUrl} alt={product.nazev} />
                 </div>
 
                 {/* INFO */}

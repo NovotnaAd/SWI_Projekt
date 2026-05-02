@@ -62,7 +62,7 @@ function Checkout() {
         try {
             const token = localStorage.getItem("token");
 
-            const res = await fetch("http://localhost:3000/orders", {
+            const res = await fetch("http://localhost:8080/orders", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -26,16 +26,16 @@ function Register() {
         }
 
         try {
-            const res = await fetch("http://localhost:3000/register", {
+            const res = await fetch("http://localhost:8080/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    jmeno: jmeno.trim(),
-                    prijmeni: prijmeni.trim(),
+                    firstName: jmeno.trim(),
+                    lastName: prijmeni.trim(),
                     email: email.trim().toLowerCase(),
-                    heslo: heslo.trim(),
+                    password: heslo.trim(),
                 }),
             });
 

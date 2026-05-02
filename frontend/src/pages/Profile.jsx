@@ -49,16 +49,17 @@ function Profile() {
                         <div className="profile-card">
 
                             <div className="profile-avatar">
-                                {user.jmeno?.charAt(0)}
-                                {user.prijmeni?.charAt(0)}
+                                {user.firstName?.charAt(0)}
+                                {user.lastName?.charAt(0)}
                             </div>
 
                             <div className="profile-details">
-                                <p><span>Jméno</span>{user.jmeno}</p>
-                                <p><span>Příjmení</span>{user.prijmeni}</p>
+                                <p><span>Jméno</span>{user.firstName}</p>
+                                <p><span>Příjmení</span>{user.lastName}</p>
                                 <p><span>Email</span>{user.email}</p>
-                                {user.telefon && (
-                                    <p><span>Telefon</span>{user.telefon}</p>
+
+                                {user.phoneNumber && (
+                                    <p><span>Telefon</span>{user.phoneNumber}</p>
                                 )}
                             </div>
 

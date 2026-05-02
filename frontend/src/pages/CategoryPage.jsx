@@ -13,7 +13,7 @@ function CategoryPage() {
 
     // fetch categories
     useEffect(() => {
-        fetch("http://localhost:3000/categories")
+        fetch("http://localhost:8080/categories")
             .then(res => res.json())
             .then(data => setCategories(data))
             .catch(err => console.error(err));
@@ -21,7 +21,7 @@ function CategoryPage() {
 
     // fetch products
     useEffect(() => {
-        fetch("http://localhost:3000/products")
+        fetch("http://localhost:8080/products")
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.error(err));
@@ -32,7 +32,7 @@ function CategoryPage() {
 
     // filtr produktů
     const filteredProducts = products.filter(
-        p => p.kategorie_id === category?.id
+        p => p.category?.id === category?.id
     );
 
     return (
@@ -65,7 +65,7 @@ function CategoryPage() {
                             style={{ cursor: "pointer", position: "relative" }}
                         >
                             <img
-                                src={product.obrazek}
+                                src={product.imageUrl}
                                 alt={product.nazev}
                                 className="product-img"
                             />

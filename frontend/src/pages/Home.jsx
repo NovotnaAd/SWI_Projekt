@@ -4,7 +4,6 @@ import summer from "../assets/images/summer_collection.jpg";
 
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
 
 function Home() {
     const [products, setProducts] = useState([]);
@@ -12,7 +11,7 @@ function Home() {
 
     // FETCH PRODUCTS
     useEffect(() => {
-        fetch("http://localhost:3000/products")
+        fetch("http://localhost:8080/products")
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.error(err));
@@ -20,7 +19,7 @@ function Home() {
 
     // FETCH CATEGORIES
     useEffect(() => {
-        fetch("http://localhost:3000/categories")
+        fetch("http://localhost:8080/categories")
             .then(res => res.json())
             .then(data => setCategories(data))
             .catch(err => console.error(err));
@@ -55,7 +54,7 @@ function Home() {
                                 style={{ textDecoration: "none", color: "inherit" }}
                             >
                                 <div className="card category-card-clean">
-                                    <img src={cat.obrazek} alt={cat.nazev} />
+                                    <img src={cat.imageUrl} alt={cat.nazev} />
                                     <div className="card-body text-center">
                                         <h5>{cat.nazev}</h5>
                                     </div>
@@ -91,7 +90,7 @@ function Home() {
                                 style={{ textDecoration: "none", color: "inherit" }}
                             >
                                 <div className="card product-card">
-                                    <img src={product.obrazek} alt={product.nazev} />
+                                    <img src={product.imageUrl} alt={product.nazev} />
                                     <div className="card-body text-center">
                                         <h5>{product.nazev}</h5>
                                         <p className="price">{product.cena} Kč</p>
@@ -121,7 +120,7 @@ function Home() {
                             >
                                 <div className="card product-card">
                                     <div className="badge">Bestseller</div>
-                                    <img src={product.obrazek} alt={product.nazev} />
+                                    <img src={product.imageUrl} alt={product.nazev} />
                                     <div className="card-body text-center">
                                         <h5>{product.nazev}</h5>
                                         <p className="price">{product.cena} Kč</p>
